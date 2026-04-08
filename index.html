@@ -1,2 +1,936 @@
-Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-04-08 12:53:45
-Current User's Login: rishuwrites
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Basics – Complete Beginner Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e29;
+    --border: #252a38;
+    --accent: #4f9eff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --accent5: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --kbd-bg: #1e2333;
+    --kbd-border: #3a4055;
+    --kbd-shadow: #0a0c12;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── Background texture ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,158,255,.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(124,58,237,.06) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .page-wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 56px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(79,158,255,.1); border: 1px solid rgba(79,158,255,.25);
+    color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 78px);
+    letter-spacing: .04em; line-height: 1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 14px;
+  }
+  .hero p {
+    color: var(--muted); font-size: 14px; max-width: 480px; margin: 0 auto;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 56px;
+  }
+  .toc-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px;
+  }
+  .toc-item {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500;
+    padding: 7px 12px; border-radius: 8px; transition: all .2s;
+  }
+  .toc-item:hover { background: var(--surface2); color: var(--text); }
+  .toc-item .dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 60px;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: .05em;
+  }
+  .section-sub { color: var(--muted); font-size: 13px; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: #333b52; }
+  .card-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── SHORTCUT TABLE ── */
+  .shortcut-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 20px;
+    align-items: center;
+  }
+  .shortcut-grid .row-divider {
+    grid-column: 1 / -1;
+    height: 1px; background: var(--border); margin: 4px 0;
+  }
+
+  /* ── KBD ── */
+  kbd {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--kbd-bg);
+    border: 1px solid var(--kbd-border);
+    border-bottom: 3px solid var(--kbd-shadow);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700; color: #c9d4eb;
+    white-space: nowrap;
+    letter-spacing: .02em;
+  }
+  kbd .plus { color: var(--muted); margin: 0 1px; font-size: 10px; }
+
+  .shortcut-desc {
+    font-size: 13.5px; color: #b8c4db;
+  }
+
+  /* ── IMPORTANT BADGE ── */
+  .badge-imp {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(245,158,11,.12); border: 1px solid rgba(245,158,11,.3);
+    color: var(--accent4); font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-left: 6px;
+  }
+
+  /* ── PILL ROW ── */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 14px;
+    font-size: 13px; color: #c0cce0;
+  }
+  .pill strong { color: var(--text); }
+
+  /* ── LIST ── */
+  ul.styled, ol.styled { padding-left: 0; list-style: none; }
+  ul.styled li, ol.styled li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    font-size: 14px; color: #b8c4db;
+  }
+  ul.styled li:last-child, ol.styled li:last-child { border-bottom: none; }
+  ul.styled li::before {
+    content: '▸'; color: var(--accent); font-size: 10px; margin-top: 5px; flex-shrink: 0;
+  }
+  ol.styled { counter-reset: step; }
+  ol.styled li { counter-increment: step; }
+  ol.styled li::before {
+    content: counter(step);
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--accent); font-size: 11px; font-weight: 700; font-family: 'Space Mono', monospace;
+    min-width: 22px; height: 22px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 3px;
+  }
+
+  /* ── WARNING / TIP BOX ── */
+  .tip-box {
+    display: flex; gap: 14px;
+    border-radius: 10px; padding: 14px 18px; margin-top: 16px;
+    font-size: 13.5px;
+  }
+  .tip-box.warn { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); color: #fca5a5; }
+  .tip-box.info { background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.2); color: #6ee7b7; }
+  .tip-box.amber { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); color: #fcd34d; }
+  .tip-box .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── COMPARISON TABLE ── */
+  .diff-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .diff-table th {
+    text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .diff-table td {
+    padding: 10px 12px; font-size: 13.5px; color: #c0cce0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .diff-table tr:last-child td { border-bottom: none; }
+  .diff-table .label { font-weight: 600; color: var(--text); width: 120px; }
+  .diff-table .sym {
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    color: var(--accent4); width: 40px;
+  }
+
+  /* ── SNAP GRID ── */
+  .snap-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;
+  }
+  .snap-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .snap-arrow {
+    font-size: 22px; line-height: 1; width: 32px; text-align: center; flex-shrink: 0;
+  }
+  .snap-label { font-size: 13px; color: #b8c4db; }
+  .snap-label strong { display: block; color: var(--text); margin-bottom: 2px; }
+
+  /* ── MOUSE BUTTONS ── */
+  .mouse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .mouse-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; text-align: center;
+  }
+  .mouse-card .m-icon { font-size: 28px; margin-bottom: 8px; }
+  .mouse-card .m-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .mouse-card .m-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── WINDOW BUTTONS ── */
+  .win-btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .win-btn-card {
+    border-radius: 12px; padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .win-btn-card.minimize { background: rgba(79,158,255,.06); border-color: rgba(79,158,255,.2); }
+  .win-btn-card.maximize { background: rgba(16,185,129,.06); border-color: rgba(16,185,129,.2); }
+  .win-btn-card.restore  { background: rgba(245,158,11,.06); border-color: rgba(245,158,11,.2); }
+  .win-btn-card.close    { background: rgba(239,68,68,.06); border-color: rgba(239,68,68,.2); }
+
+  .win-btn-card .wbc-sym {
+    font-size: 26px; font-weight: 800; margin-bottom: 8px; font-family: 'Space Mono', monospace;
+  }
+  .win-btn-card.minimize .wbc-sym { color: var(--accent); }
+  .win-btn-card.maximize .wbc-sym { color: var(--accent3); }
+  .win-btn-card.restore  .wbc-sym { color: var(--accent4); }
+  .win-btn-card.close    .wbc-sym { color: var(--accent5); }
+
+  .win-btn-card .wbc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .win-btn-card .wbc-points { list-style: none; padding: 0; }
+  .win-btn-card .wbc-points li { font-size: 12px; color: var(--muted); padding: 2px 0; }
+  .win-btn-card .wbc-key { margin-top: 10px; }
+
+  /* ── MISTAKE CARDS ── */
+  .mistake-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .mistake-card {
+    background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.18);
+    border-radius: 12px; padding: 16px; font-size: 13px; color: #fca5a5;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .mistake-card .x { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── PRACTICE STEPS ── */
+  .practice-steps {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;
+  }
+  .step-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--accent);
+    line-height: 1; flex-shrink: 0; width: 28px;
+  }
+  .step-text { font-size: 13.5px; color: #c0cce0; }
+  .step-text kbd { font-size: 10px; }
+
+  /* ── NOTEPAD MENU TABLE ── */
+  .menu-blocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .menu-block {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+  }
+  .menu-block .mb-title {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .menu-block ul { list-style: none; padding: 0; }
+  .menu-block ul li { font-size: 12.5px; color: #b8c4db; padding: 4px 0; display: flex; align-items: center; gap: 7px; }
+  .menu-block ul li::before { content: '·'; color: var(--accent); font-size: 16px; line-height: 1; }
+
+  /* ── EXAM NOTE ── */
+  .exam-note {
+    background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(79,158,255,.08));
+    border: 1px solid rgba(124,58,237,.35);
+    border-radius: 14px; padding: 24px 28px;
+  }
+  .exam-note .en-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    color: #a78bfa; margin-bottom: 10px;
+  }
+  .exam-note p { font-size: 14.5px; color: #d4d4f0; line-height: 1.8; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center; margin-top: 72px; padding-top: 28px;
+    border-top: 1px solid var(--border); color: var(--muted); font-size: 12px;
+  }
+
+  /* ── COLOR DOTS FOR TOC ── */
+  .c-blue  { background: var(--accent); }
+  .c-purple{ background: var(--accent2); }
+  .c-green { background: var(--accent3); }
+  .c-amber { background: var(--accent4); }
+  .c-red   { background: var(--accent5); }
+  .c-teal  { background: #06b6d4; }
+  .c-pink  { background: #ec4899; }
+
+  /* ── SECTION ICON COLORS ── */
+  .si-blue   { background: rgba(79,158,255,.12); }
+  .si-purple { background: rgba(124,58,237,.12); }
+  .si-green  { background: rgba(16,185,129,.12); }
+  .si-amber  { background: rgba(245,158,11,.12); }
+  .si-red    { background: rgba(239,68,68,.12); }
+  .si-teal   { background: rgba(6,182,212,.12); }
+  .si-pink   { background: rgba(236,72,153,.12); }
+
+  /* Folder how-to */
+  .how-to-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .how-to-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+  }
+  .how-to-card .htc-title {
+    font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .how-to-card ul { list-style: none; padding: 0; }
+  .how-to-card ul li { font-size: 12.5px; color: #b8c4db; padding: 3px 0; display: flex; align-items: flex-start; gap: 7px; }
+  .how-to-card ul li::before { content: '→'; color: var(--accent); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+
+  @media (max-width: 600px) {
+    .snap-grid { grid-template-columns: 1fr; }
+    .win-btn-grid { grid-template-columns: 1fr 1fr; }
+    .shortcut-grid { gap: 8px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">💻 Complete Beginner Notes</div>
+    <h1>Computer Basics</h1>
+    <p>Keyboard · Mouse · Window Controls · Notepad — everything a beginner needs in one place</p>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">📋 Contents</div>
+    <div class="toc-grid">
+      <a href="#keyboard"   class="toc-item"><span class="dot c-blue"></span>Keyboard – Basic Knowledge</a>
+      <a href="#shortcuts"  class="toc-item"><span class="dot c-purple"></span>Must-Know Keyboard Shortcuts</a>
+      <a href="#mouse"      class="toc-item"><span class="dot c-green"></span>Mouse – Basic Knowledge</a>
+      <a href="#windows"    class="toc-item"><span class="dot c-amber"></span>Window Control Buttons</a>
+      <a href="#snap"       class="toc-item"><span class="dot c-teal"></span>Snap Windows (Split Screen)</a>
+      <a href="#mistakes"   class="toc-item"><span class="dot c-red"></span>Common Beginner Mistakes</a>
+      <a href="#practice"   class="toc-item"><span class="dot c-pink"></span>Daily Practice</a>
+      <a href="#wallpaper"  class="toc-item"><span class="dot c-blue"></span>Wallpaper &amp; Lock Screen</a>
+      <a href="#folders"    class="toc-item"><span class="dot c-green"></span>Folders – Create / Rename / Delete</a>
+      <a href="#notepad"    class="toc-item"><span class="dot c-amber"></span>What is Notepad?</a>
+      <a href="#notepad-sc" class="toc-item"><span class="dot c-purple"></span>Notepad Shortcuts</a>
+      <a href="#exam"       class="toc-item"><span class="dot c-teal"></span>Exam / Interview Note</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════ KEYBOARD ════════════════════ -->
+  <div class="section" id="keyboard">
+    <div class="section-header">
+      <div class="section-icon si-blue">⌨️</div>
+      <div>
+        <div class="section-title">Keyboard – Basic Knowledge</div>
+        <div class="section-sub">An input device used to type letters, numbers and give commands</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">🔑 Main Keys and Their Work</div>
+      <div class="pill-row">
+        <div class="pill"><strong>Alphabet Keys (A–Z)</strong> → Type letters and words</div>
+        <div class="pill"><strong>Number Keys (0–9)</strong> → Type numbers</div>
+        <div class="pill"><strong>Enter</strong> → New line / confirm command</div>
+        <div class="pill"><strong>Backspace</strong> → Delete letter to the left</div>
+        <div class="pill"><strong>Spacebar</strong> → Space between words</div>
+        <div class="pill"><strong>Shift</strong> → Capital letter or symbol (Shift + a = A)</div>
+        <div class="pill"><strong>Caps Lock</strong> → Capital letters ON / OFF</div>
+        <div class="pill"><strong>Tab</strong> → Move cursor forward</div>
+        <div class="pill"><strong>Esc (Escape)</strong> → Cancel current action</div>
+        <div class="pill"><strong>Ctrl (Control)</strong> → Used with shortcuts</div>
+        <div class="pill"><strong>Windows Key ⊞</strong> → Open Start menu</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ SHORTCUTS ════════════════════ -->
+  <div class="section" id="shortcuts">
+    <div class="section-header">
+      <div class="section-icon si-purple">⚡</div>
+      <div>
+        <div class="section-title">Must-Know Keyboard Shortcuts</div>
+        <div class="section-sub">Memorise these — they work in almost every program</div>
+      </div>
+    </div>
+
+    <!-- Basic Work -->
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2)">📝 Basic Work</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>C</kbd><span class="shortcut-desc">Copy selected text or file</span>
+        <kbd>Ctrl<span class="plus">+</span>V</kbd><span class="shortcut-desc">Paste copied content</span>
+        <kbd>Ctrl<span class="plus">+</span>X</kbd><span class="shortcut-desc">Cut selected text or file</span>
+        <kbd>Ctrl<span class="plus">+</span>Z</kbd><span class="shortcut-desc">Undo last action</span>
+        <kbd>Ctrl<span class="plus">+</span>Y</kbd><span class="shortcut-desc">Redo (reverse undo)</span>
+        <kbd>Ctrl<span class="plus">+</span>A</kbd><span class="shortcut-desc">Select all content</span>
+        <kbd>Ctrl<span class="plus">+</span>S</kbd><span class="shortcut-desc">Save file <span class="badge-imp">⭐ MOST IMPORTANT</span></span>
+        <kbd>Ctrl<span class="plus">+</span>P</kbd><span class="shortcut-desc">Print document</span>
+      </div>
+    </div>
+
+    <!-- File & Folder -->
+    <div class="card">
+      <div class="card-title" style="color:var(--accent3)">📁 File &amp; Folder</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>N</kbd><span class="shortcut-desc">New file</span>
+        <kbd>Ctrl<span class="plus">+</span>O</kbd><span class="shortcut-desc">Open file</span>
+        <kbd>Ctrl<span class="plus">+</span>Shift<span class="plus">+</span>S</kbd><span class="shortcut-desc">Save As (save with new name)</span>
+        <kbd>Ctrl<span class="plus">+</span>Shift<span class="plus">+</span>N</kbd><span class="shortcut-desc">Create new folder</span>
+        <kbd>F2</kbd><span class="shortcut-desc">Rename selected file or folder</span>
+        <kbd>Delete</kbd><span class="shortcut-desc">Send to Recycle Bin</span>
+        <kbd>Shift<span class="plus">+</span>Delete</kbd><span class="shortcut-desc">Permanently delete (⚠️ cannot undo)</span>
+      </div>
+      <div class="tip-box warn" style="margin-top:16px">
+        <span class="icon">⚠️</span>
+        <span><strong>Shift + Delete</strong> permanently removes a file — it does NOT go to the Recycle Bin and cannot be recovered.</span>
+      </div>
+    </div>
+
+    <!-- Internet / Browser -->
+    <div class="card">
+      <div class="card-title" style="color:var(--accent4)">🌐 Internet / Browser</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>T</kbd><span class="shortcut-desc">Open new tab</span>
+        <kbd>Ctrl<span class="plus">+</span>W</kbd><span class="shortcut-desc">Close current tab</span>
+        <kbd>Ctrl<span class="plus">+</span>Shift<span class="plus">+</span>T</kbd><span class="shortcut-desc">Reopen last closed tab</span>
+        <kbd>Ctrl<span class="plus">+</span>L</kbd><span class="shortcut-desc">Jump to address bar</span>
+        <kbd>Ctrl<span class="plus">+</span>R</kbd><span class="shortcut-desc">Refresh / reload page</span>
+        <kbd>Ctrl<span class="plus">+</span>+</kbd><span class="shortcut-desc">Zoom in</span>
+        <kbd>Ctrl<span class="plus">+</span>−</kbd><span class="shortcut-desc">Zoom out</span>
+        <kbd>Ctrl<span class="plus">+</span>0</kbd><span class="shortcut-desc">Reset to normal zoom (100%)</span>
+      </div>
+    </div>
+
+    <!-- Windows Control -->
+    <div class="card">
+      <div class="card-title" style="color:#06b6d4">🖥️ Windows Control</div>
+      <div class="shortcut-grid">
+        <kbd>Alt<span class="plus">+</span>Tab</kbd><span class="shortcut-desc">Switch between open apps</span>
+        <kbd>Alt<span class="plus">+</span>F4</kbd><span class="shortcut-desc">Close current app</span>
+        <kbd>Win<span class="plus">+</span>D</kbd><span class="shortcut-desc">Show / hide desktop</span>
+        <kbd>Win<span class="plus">+</span>E</kbd><span class="shortcut-desc">Open File Explorer</span>
+        <kbd>Win<span class="plus">+</span>L</kbd><span class="shortcut-desc">Lock the computer</span>
+        <kbd>Ctrl<span class="plus">+</span>Alt<span class="plus">+</span>Del</kbd><span class="shortcut-desc">Open security / task screen</span>
+        <kbd>Ctrl<span class="plus">+</span>Shift<span class="plus">+</span>Esc</kbd><span class="shortcut-desc">Open Task Manager directly</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ MOUSE ════════════════════ -->
+  <div class="section" id="mouse">
+    <div class="section-header">
+      <div class="section-icon si-green">🖱️</div>
+      <div>
+        <div class="section-title">Mouse – Basic Knowledge</div>
+        <div class="section-sub">Used to point, select, open and move items on the screen</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent3)">🔘 Mouse Buttons</div>
+      <div class="mouse-grid">
+        <div class="mouse-card">
+          <div class="m-icon">👆</div>
+          <div class="m-name">Left Click (Single)</div>
+          <div class="m-desc">Select an item</div>
+        </div>
+        <div class="mouse-card">
+          <div class="m-icon">👆👆</div>
+          <div class="m-name">Left Click (Double)</div>
+          <div class="m-desc">Open a file or folder</div>
+        </div>
+        <div class="mouse-card">
+          <div class="m-icon">👉</div>
+          <div class="m-name">Right Click</div>
+          <div class="m-desc">Show options / context menu</div>
+        </div>
+        <div class="mouse-card">
+          <div class="m-icon">🖱️</div>
+          <div class="m-name">Scroll Wheel</div>
+          <div class="m-desc">Scroll up / down on a page</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">✋ Drag &amp; Drop</div>
+      <ol class="styled">
+        <li>Left-click and <strong>hold</strong> the item</li>
+        <li><strong>Move</strong> the mouse to the new location</li>
+        <li><strong>Release</strong> the mouse button to drop</li>
+      </ol>
+      <div class="tip-box info">
+        <span class="icon">💡</span>
+        <span>Drag &amp; Drop is used to <strong>move files</strong> between folders or to <strong>select text</strong> by dragging over it.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ WINDOW BUTTONS ════════════════════ -->
+  <div class="section" id="windows">
+    <div class="section-header">
+      <div class="section-icon si-amber">🪟</div>
+      <div>
+        <div class="section-title">Window Control Buttons</div>
+        <div class="section-sub">Every program window has three buttons in the top-right corner</div>
+      </div>
+    </div>
+
+    <div class="win-btn-grid" style="margin-bottom:20px">
+      <div class="win-btn-card minimize">
+        <div class="wbc-sym">_</div>
+        <div class="wbc-title">Minimize</div>
+        <ul class="wbc-points">
+          <li>Hides the window from view</li>
+          <li>App keeps running in background</li>
+          <li>Goes to the Taskbar</li>
+        </ul>
+        <div class="wbc-key"><kbd>Win<span class="plus">+</span>↓</kbd></div>
+      </div>
+      <div class="win-btn-card maximize">
+        <div class="wbc-sym">□</div>
+        <div class="wbc-title">Maximize</div>
+        <ul class="wbc-points">
+          <li>Makes window full screen</li>
+          <li>Uses the entire display</li>
+        </ul>
+        <div class="wbc-key"><kbd>Win<span class="plus">+</span>↑</kbd></div>
+      </div>
+      <div class="win-btn-card restore">
+        <div class="wbc-sym">❐</div>
+        <div class="wbc-title">Restore</div>
+        <ul class="wbc-points">
+          <li>Returns to medium window size</li>
+          <li>Appears after maximizing</li>
+        </ul>
+        <div class="wbc-key"><kbd>Win<span class="plus">+</span>↓</kbd></div>
+      </div>
+      <div class="win-btn-card close">
+        <div class="wbc-sym">✕</div>
+        <div class="wbc-title">Close</div>
+        <ul class="wbc-points">
+          <li>Completely stops the app</li>
+          <li>Unsaved work may be lost</li>
+        </ul>
+        <div class="wbc-key"><kbd>Alt<span class="plus">+</span>F4</kbd></div>
+      </div>
+    </div>
+
+    <div class="tip-box amber">
+      <span class="icon">💾</span>
+      <span>Always press <kbd>Ctrl<span class="plus">+</span>S</kbd> <strong>before</strong> closing a window to save your work.</span>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="card-title" style="color:var(--accent4)">⚡ Important Difference</div>
+      <table class="diff-table">
+        <thead><tr><th>Button</th><th>Symbol</th><th>What It Does</th></tr></thead>
+        <tbody>
+          <tr><td class="label">Minimize</td><td class="sym">_</td><td>Hides the window → goes to Taskbar</td></tr>
+          <tr><td class="label">Maximize</td><td class="sym">□</td><td>Makes window full screen</td></tr>
+          <tr><td class="label">Restore</td><td class="sym">❐</td><td>Returns to medium / partial size</td></tr>
+          <tr><td class="label">Close</td><td class="sym">✕</td><td>Stops / exits the program completely</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════ SNAP ════════════════════ -->
+  <div class="section" id="snap">
+    <div class="section-header">
+      <div class="section-icon si-teal">⊞</div>
+      <div>
+        <div class="section-title">Snap Windows – Split Screen</div>
+        <div class="section-sub">Work with two apps side by side using arrow key shortcuts</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="snap-grid">
+        <div class="snap-card">
+          <div class="snap-arrow">←</div>
+          <div class="snap-label"><strong>Left Side</strong><kbd>Win<span class="plus">+</span>←</kbd></div>
+        </div>
+        <div class="snap-card">
+          <div class="snap-arrow">→</div>
+          <div class="snap-label"><strong>Right Side</strong><kbd>Win<span class="plus">+</span>→</kbd></div>
+        </div>
+        <div class="snap-card">
+          <div class="snap-arrow">↑</div>
+          <div class="snap-label"><strong>Full Screen</strong><kbd>Win<span class="plus">+</span>↑</kbd></div>
+        </div>
+        <div class="snap-card">
+          <div class="snap-arrow">↓</div>
+          <div class="snap-label"><strong>Minimize / Restore</strong><kbd>Win<span class="plus">+</span>↓</kbd></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <div class="card-title" style="color:#06b6d4">📌 Taskbar (Bottom Bar)</div>
+      <ul class="styled">
+        <li>Shows all currently <strong>open apps</strong></li>
+        <li>Shows all <strong>minimized apps</strong> (still running)</li>
+        <li>Displays <strong>date &amp; time</strong></li>
+        <li>Shows <strong>internet, sound and battery</strong> icons</li>
+      </ul>
+      <div class="tip-box info" style="margin-top:12px">
+        <span class="icon">👆</span>
+        <span>Click <strong>once</strong> on a Taskbar icon to open or bring that app to the front.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ MISTAKES ════════════════════ -->
+  <div class="section" id="mistakes">
+    <div class="section-header">
+      <div class="section-icon si-red">❌</div>
+      <div>
+        <div class="section-title">Common Beginner Mistakes</div>
+        <div class="section-sub">Avoid these — they confuse almost every new computer user</div>
+      </div>
+    </div>
+
+    <div class="mistake-grid">
+      <div class="mistake-card"><span class="x">✖</span>Thinking <strong>Minimize = Close</strong> — it does not close the app!</div>
+      <div class="mistake-card"><span class="x">✖</span>Closing a file <strong>without saving</strong> first (always Ctrl + S)</div>
+      <div class="mistake-card"><span class="x">✖</span>Using <strong>Shift + Delete</strong> by accident — permanently deletes!</div>
+      <div class="mistake-card"><span class="x">✖</span><strong>Panicking</strong> when a window disappears — it is just minimized</div>
+    </div>
+
+    <div class="tip-box info" style="margin-top:16px">
+      <span class="icon">✅</span>
+      <span><strong>Remember:</strong> Minimized apps are safe. Look for them in the Taskbar at the bottom of the screen.</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════ DAILY PRACTICE ════════════════════ -->
+  <div class="section" id="practice">
+    <div class="section-header">
+      <div class="section-icon si-pink">🎯</div>
+      <div>
+        <div class="section-title">Daily Practice – 10 Minutes</div>
+        <div class="section-sub">Repeat these steps every day to build muscle memory</div>
+      </div>
+    </div>
+
+    <div class="practice-steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-text">Open <strong>Notepad</strong> from the Start menu</div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-text">Type <strong>5 lines</strong> of any text</div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-text">Save the file using <kbd>Ctrl<span class="plus">+</span>S</kbd></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-text">Practice <strong>Copy &amp; Paste</strong> with <kbd>Ctrl+C</kbd> / <kbd>Ctrl+V</kbd></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-text"><strong>Minimize</strong> the window, then reopen from Taskbar</div></div>
+      <div class="step-card"><div class="step-num">6</div><div class="step-text">Close Notepad using <kbd>Alt<span class="plus">+</span>F4</kbd></div></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ WALLPAPER ════════════════════ -->
+  <div class="section" id="wallpaper">
+    <div class="section-header">
+      <div class="section-icon si-blue">🖼️</div>
+      <div>
+        <div class="section-title">How to Change Wallpaper &amp; Lock Screen</div>
+        <div class="section-sub">Personalise the look of your Windows desktop</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <ol class="styled">
+        <li><strong>Right-click</strong> on the Desktop (empty area)</li>
+        <li>Click <strong>Personalize</strong> from the menu</li>
+        <li>Choose <strong>Background</strong> → select your wallpaper image</li>
+        <li>Choose <strong>Lock Screen</strong> → change the lock screen image</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ════════════════════ FOLDERS ════════════════════ -->
+  <div class="section" id="folders">
+    <div class="section-header">
+      <div class="section-icon si-green">📁</div>
+      <div>
+        <div class="section-title">How to Create, Rename &amp; Delete Folders</div>
+        <div class="section-sub">Organise your files using folders</div>
+      </div>
+    </div>
+
+    <div class="how-to-grid">
+      <div class="how-to-card">
+        <div class="htc-title">📂 Create Folder</div>
+        <ul>
+          <li>Right-click Desktop → New → Folder</li>
+          <li>Shortcut: <kbd>Ctrl+Shift+N</kbd></li>
+        </ul>
+      </div>
+      <div class="how-to-card">
+        <div class="htc-title">✏️ Rename Folder</div>
+        <ul>
+          <li>Right-click the folder → Rename</li>
+          <li>Select folder → press <kbd>F2</kbd></li>
+        </ul>
+      </div>
+      <div class="how-to-card">
+        <div class="htc-title">🗑️ Delete Folder (Temporary)</div>
+        <ul>
+          <li>Select folder → press <kbd>Delete</kbd></li>
+          <li>Goes to Recycle Bin (recoverable)</li>
+        </ul>
+      </div>
+      <div class="how-to-card">
+        <div class="htc-title">♻️ Recover Deleted Folder</div>
+        <ul>
+          <li>Open <strong>Recycle Bin</strong></li>
+          <li>Right-click the file</li>
+          <li>Click <strong>Restore</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box warn" style="margin-top:16px">
+      <span class="icon">⚠️</span>
+      <span><strong>Permanent Delete:</strong> Select folder → <kbd>Shift+Delete</kbd> — this action <strong>cannot be undone</strong>. The file will NOT go to the Recycle Bin.</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════ NOTEPAD ════════════════════ -->
+  <div class="section" id="notepad">
+    <div class="section-header">
+      <div class="section-icon si-amber">📝</div>
+      <div>
+        <div class="section-title">What is Notepad?</div>
+        <div class="section-sub">A basic text editor built into Microsoft Windows</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent4)">💼 Uses of Notepad</div>
+      <ul class="styled">
+        <li>Write simple text and quick notes</li>
+        <li>Create and save <strong>.txt</strong> files</li>
+        <li>Write <strong>HTML / CSS / JavaScript</strong> code</li>
+        <li>Write <strong>batch files</strong> (.bat) for Windows automation</li>
+        <li>Edit configuration files for programs</li>
+      </ul>
+      <div class="tip-box warn" style="margin-top:14px">
+        <span class="icon">⚠️</span>
+        <span>Notepad does <strong>not</strong> support bold text, font colors, images or tables. Use WordPad or Word for advanced formatting.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent4)">📋 Notepad Menus &amp; Functions</div>
+      <div class="menu-blocks">
+        <div class="menu-block">
+          <div class="mb-title">📄 File Menu</div>
+          <ul>
+            <li>New → New file</li>
+            <li>Open → Open file</li>
+            <li>Save → Save file</li>
+            <li>Save As → Save with new name</li>
+            <li>Page Setup → Page layout</li>
+            <li>Print → Print file</li>
+            <li>Exit → Close Notepad</li>
+          </ul>
+        </div>
+        <div class="menu-block">
+          <div class="mb-title">✏️ Edit Menu</div>
+          <ul>
+            <li>Undo / Cut / Copy / Paste</li>
+            <li>Find → Search for text</li>
+            <li>Replace → Find and replace</li>
+            <li>Go To → Jump to a line</li>
+            <li>Select All</li>
+            <li>Time / Date → Insert current time</li>
+          </ul>
+        </div>
+        <div class="menu-block">
+          <div class="mb-title">🎨 Format Menu</div>
+          <ul>
+            <li>Word Wrap → Wrap long lines</li>
+            <li>Font style &amp; size</li>
+          </ul>
+          <div class="mb-title" style="margin-top:14px">🔍 View Menu</div>
+          <ul>
+            <li>Zoom In / Out</li>
+            <li>Restore Zoom</li>
+            <li>Status Bar</li>
+          </ul>
+        </div>
+        <div class="menu-block">
+          <div class="mb-title">❓ Help Menu</div>
+          <ul>
+            <li>View Help</li>
+            <li>About Notepad</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ NOTEPAD SHORTCUTS ════════════════════ -->
+  <div class="section" id="notepad-sc">
+    <div class="section-header">
+      <div class="section-icon si-purple">⚡</div>
+      <div>
+        <div class="section-title">Notepad Shortcuts</div>
+        <div class="section-sub">Exam Important — learn all of these</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2)">📄 File Shortcuts</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>N</kbd><span class="shortcut-desc">New file</span>
+        <kbd>Ctrl<span class="plus">+</span>O</kbd><span class="shortcut-desc">Open file</span>
+        <kbd>Ctrl<span class="plus">+</span>S</kbd><span class="shortcut-desc">Save file</span>
+        <kbd>Ctrl<span class="plus">+</span>Shift<span class="plus">+</span>S</kbd><span class="shortcut-desc">Save As (save with new name)</span>
+        <kbd>Ctrl<span class="plus">+</span>P</kbd><span class="shortcut-desc">Print file</span>
+        <kbd>Alt<span class="plus">+</span>F4</kbd><span class="shortcut-desc">Exit / close Notepad</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent3)">✏️ Edit Shortcuts</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>Z</kbd><span class="shortcut-desc">Undo</span>
+        <kbd>Ctrl<span class="plus">+</span>X</kbd><span class="shortcut-desc">Cut</span>
+        <kbd>Ctrl<span class="plus">+</span>C</kbd><span class="shortcut-desc">Copy</span>
+        <kbd>Ctrl<span class="plus">+</span>V</kbd><span class="shortcut-desc">Paste</span>
+        <kbd>Ctrl<span class="plus">+</span>A</kbd><span class="shortcut-desc">Select all</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:#06b6d4">🔍 Find &amp; Navigation Shortcuts</div>
+      <div class="shortcut-grid">
+        <kbd>Ctrl<span class="plus">+</span>F</kbd><span class="shortcut-desc">Find (search for text)</span>
+        <kbd>Ctrl<span class="plus">+</span>H</kbd><span class="shortcut-desc">Replace (find and replace text)</span>
+        <kbd>Ctrl<span class="plus">+</span>G</kbd><span class="shortcut-desc">Go To line number</span>
+        <kbd>F5</kbd><span class="shortcut-desc">Insert current Date &amp; Time</span>
+        <kbd>Home</kbd><span class="shortcut-desc">Jump to beginning of line</span>
+        <kbd>End</kbd><span class="shortcut-desc">Jump to end of line</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ EXAM NOTE ════════════════════ -->
+  <div class="section" id="exam">
+    <div class="section-header">
+      <div class="section-icon si-teal">🎓</div>
+      <div>
+        <div class="section-title">Exam / Interview Short Note</div>
+        <div class="section-sub">Write this definition in exams for full marks</div>
+      </div>
+    </div>
+
+    <div class="exam-note">
+      <div class="en-label">📖 Definition – Notepad</div>
+      <p>
+        <strong>Notepad</strong> is a simple text editor used to create and edit plain text files (.txt).
+        It is mainly used for writing notes, scripts and configuration files.
+        It does not support advanced formatting features such as bold text, colors, images or tables.
+        Notepad is a built-in application provided by Microsoft Windows and is useful for lightweight text editing and basic coding tasks.
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Computer Basics – Complete Beginner Notes &nbsp;·&nbsp; Keyboard · Mouse · Windows · Notepad
+  </div>
+
+</div>
+</body>
+</html>
